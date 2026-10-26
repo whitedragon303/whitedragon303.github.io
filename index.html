@@ -1,167 +1,421 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>whitedragon-one</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<title>WhiteDragon303</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow column that reads like a repo's file listing. The headline is the bold move; everything else stays quiet. */
+:root {
+  --bg: #fafbfc;
+  --surface: #f1f4f8;
+  --fg: #12161c;
+  --muted: #5a6573;
+  --line: #dde2ea;
+  --accent: #2748cc;
+  --accent-soft: #e6ecfd;
+  --lang-js: #b08900;
+  --lang-ts: #2f6fdb;
+  --lang-html: #d2502a;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+:root[data-theme="dark"] {
+  --bg: #0b0e13;
+  --surface: #131821;
+  --fg: #e9edf3;
+  --muted: #98a3b3;
+  --line: #242c38;
+  --accent: #8fb0ff;
+  --accent-soft: #19243d;
+  --lang-js: #e3b341;
+  --lang-ts: #6aa2ff;
+  --lang-html: #f0794f;
+  color-scheme: dark;
+}
 
-        body {
-            font-family: 'Courier New', monospace;
-            background: #ffffff;
-            color: #111111;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-block: 20px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 880px; margin: 0 auto; }
+a { color: inherit; }
+a.inline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+a.inline:hover { color: var(--accent); }
+.eyebrow a.inline { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-        .container {
-            max-width: 760px;
-            width: 100%;
-            border-top: 4px solid #111;
-            padding-top: 2.5rem;
-        }
+/* Top bar */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 0.6875rem;
+  letter-spacing: 0;
+}
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 0.8125rem/1 var(--font-mono);
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 9px 12px;
+  cursor: pointer;
+}
+.toggle:hover { border-color: var(--accent); }
+.toggle svg { width: 15px; height: 15px; flex: none; }
+.toggle .moon { display: none; }
+:root[data-theme="dark"] .toggle .sun { display: none; }
+:root[data-theme="dark"] .toggle .moon { display: block; }
 
-        h1 {
-            font-size: 4rem;
-            font-weight: 400;
-            letter-spacing: -0.03em;
-            color: #000;
-            text-transform: uppercase;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
+/* Intro */
+.intro { padding-block: 72px 64px; }
+.eyebrow {
+  margin: 0 0 20px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+h1 {
+  margin: 0;
+  max-width: 14ch;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 78%;
+  font-size: clamp(2.9rem, 9.4vw, 5.6rem);
+  line-height: 0.96;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+h1 em { font-style: normal; color: var(--accent); }
+.lede {
+  margin: 28px 0 0;
+  max-width: 54ch;
+  font-size: 1.125rem;
+  color: var(--muted);
+}
+.lede strong { color: var(--fg); font-weight: 600; }
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.facts li {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  padding: 6px 10px;
+  background: var(--accent-soft);
+  color: var(--fg);
+}
 
-        .sub {
-            font-size: 0.85rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 1.5rem;
-            margin-bottom: 2rem;
-        }
+/* Section heads */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--fg);
+}
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+}
+.count {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
 
-        .sub span {
-            color: #333;
-        }
+/* Project listing */
+.projects { margin: 0; padding: 0; list-style: none; }
+.projects li { border-bottom: 1px solid var(--line); }
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) 6.5rem;
+  gap: 8px 24px;
+  align-items: start;
+  padding: 22px 12px;
+  margin-inline: -12px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.row:hover { background: var(--surface); }
+.name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.name .arrow {
+  color: var(--muted);
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+.row:hover .name { color: var(--accent); }
+.row:hover .arrow { color: var(--accent); transform: translate(2px, -2px); }
+.desc { min-width: 0; }
+.desc p { margin: 0; }
+.runs {
+  margin-top: 6px !important;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.lang {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.dot { width: 9px; height: 9px; flex: none; background: var(--muted); }
+.dot.js { background: var(--lang-js); }
+.dot.ts { background: var(--lang-ts); }
+.dot.html { background: var(--lang-html); }
 
-        section {
-            margin-bottom: 2.5rem;
-        }
+/* Elsewhere */
+.elsewhere { padding-top: 64px; }
+.links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.links a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+}
+.links .label { font-weight: 600; }
+.links .handle {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+.links a:hover .label { color: var(--accent); }
+.links a:hover .handle { color: var(--fg); }
 
-        h2 {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #999;
-            margin-bottom: 0.75rem;
-            font-weight: 400;
-        }
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 72px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
 
-        p,
-        li {
-            font-size: 1.05rem;
-            color: #1a1a1a;
-            line-height: 1.8;
-            font-family: 'Courier New', monospace;
-        }
+@media (max-width: 680px) {
+  .intro { padding-block: 48px 48px; }
+  .row { grid-template-columns: minmax(0, 1fr); gap: 6px; padding-block: 18px; }
+  .lang { margin-top: 4px; }
+  .links { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .row, .name .arrow { transition: none; }
+}
+</style>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem("wd303-theme");
+    if (saved === "dark" || saved === "light") document.documentElement.setAttribute("data-theme", saved);
+  } catch (e) {}
+})();
+</script>
 
-        ul {
-            list-style: none;
-            padding: 0;
-        }
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top" aria-label="WhiteDragon303, top of page">
+      <span class="mark" aria-hidden="true">303</span>
+      <span>whitedragon303</span>
+    </a>
+    <button class="toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span id="theme-label">Light</span>
+    </button>
+  </header>
 
-        ul li {
-            padding: 0.3rem 0 0.3rem 1.2rem;
-            position: relative;
-        }
+  <main id="top">
+    <section class="intro">
+      <p class="eyebrow">Developer, founder of <a class="inline" href="https://github.com/whitedragon-software">WhiteDragon Software</a></p>
+      <h1>Small tools that ship as <em>one file.</em></h1>
+      <p class="lede">
+        <strong><a class="inline" href="https://github.com/whitedragon303">WhiteDragon303</a></strong>, formerly WhiteDragon-one, is a developer building compact web and desktop applications, primarily Cloudflare Workers designed to be read from top to bottom in a single sitting.
+      </p>
+      <ul class="facts" aria-label="Quick facts">
+        <li>Cloudflare Workers</li>
+        <li>TypeScript &amp; JavaScript</li>
+        <li>GitHub Developer Program member</li>
+      </ul>
+    </section>
 
-        ul li::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: #ccc;
-        }
+    <section aria-labelledby="projects-title">
+      <div class="section-head">
+        <h2 id="projects-title">Projects</h2>
+        <span class="count">6 pinned on GitHub</span>
+      </div>
+      <ul class="projects">
+        <li>
+          <a class="row" href="https://github.com/whitedragon-software/relay">
+            <span class="name">relay <span class="arrow" aria-hidden="true">↗</span></span>
+            <span class="desc">
+              <p>A Cloudflare Worker that forwards and rewrites web pages so they load through your own domain.</p>
+              <p class="runs">Cloudflare Workers · one file</p>
+            </span>
+            <span class="lang"><span class="dot js"></span>JavaScript</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="https://github.com/whitedragon-software/outbox">
+            <span class="name">outbox <span class="arrow" aria-hidden="true">↗</span></span>
+            <span class="desc">
+              <p>Sends email through Resend from your own domain, with a compose form, send history in D1 and a usage dashboard.</p>
+              <p class="runs">Cloudflare Workers · D1 · Resend · one file</p>
+            </span>
+            <span class="lang"><span class="dot js"></span>JavaScript</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="https://github.com/whitedragon-software/webcore">
+            <span class="name">webcore <span class="arrow" aria-hidden="true">↗</span></span>
+            <span class="desc">
+              <p>A minimal AI chat app on Cloudflare's edge. It can ground answers in live web search and keeps a branching history of every regenerated reply.</p>
+              <p class="runs">Cloudflare Workers · D1 · Workers AI · one file</p>
+            </span>
+            <span class="lang"><span class="dot js"></span>JavaScript</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="https://github.com/whitedragon-software/daybreak">
+            <span class="name">daybreak <span class="arrow" aria-hidden="true">↗</span></span>
+            <span class="desc">
+              <p>A minimal multi-tab desktop browser with a frameless window, a custom tab strip, and each tab in its own browsing context.</p>
+              <p class="runs">Electron · BaseWindow · WebContentsView</p>
+            </span>
+            <span class="lang"><span class="dot html"></span>HTML</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="https://github.com/whitedragon-software/whitedragon-authenticator">
+            <span class="name">whitedragon-authenticator <span class="arrow" aria-hidden="true">↗</span></span>
+            <span class="desc">
+              <p>A single-file TOTP authenticator that generates your one-time codes right in the browser.</p>
+              <p class="runs">Browser · Cloudflare Workers · one file</p>
+            </span>
+            <span class="lang"><span class="dot html"></span>HTML</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="https://github.com/whitedragon-software/whitedragon-forum">
+            <span class="name">whitedragon-forum <span class="arrow" aria-hidden="true">↗</span></span>
+            <span class="desc">
+              <p>A forum site powered entirely by GitHub Discussions, built to static files for GitHub Pages.</p>
+              <p class="runs">SvelteKit · Tailwind CSS · GitHub Pages</p>
+            </span>
+            <span class="lang"><span class="dot ts"></span>TypeScript</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-        .divider {
-            border: none;
-            border-top: 1px solid #eee;
-            margin: 1.5rem 0;
-        }
+    <section class="elsewhere" aria-labelledby="elsewhere-title">
+      <div class="section-head">
+        <h2 id="elsewhere-title">Elsewhere</h2>
+        <span class="count">find me here</span>
+      </div>
+      <ul class="links">
+        <li><a href="https://github.com/whitedragon303"><span class="label">GitHub</span><span class="handle">whitedragon303</span></a></li>
+        <li><a href="https://github.com/whitedragon-software"><span class="label">Organization</span><span class="handle">whitedragon-software</span></a></li>
+        <li><a href="https://whitedragon.software"><span class="label">Website</span><span class="handle">whitedragon.software</span></a></li>
+        <li><a href="https://dev.to/whitedragon"><span class="label">DEV</span><span class="handle">dev.to/whitedragon</span></a></li>
+        <li><a href="https://x.com/whitedragon_sw"><span class="label">X</span><span class="handle">@whitedragon_sw</span></a></li>
+      </ul>
+    </section>
+  </main>
 
-        footer {
-            font-size: 0.7rem;
-            color: #bbb;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: 1rem;
-        }
+  <footer class="foot">
+    <span>© 2026 WhiteDragon303</span>
+  </footer>
+</div>
 
-        footer a {
-            color: #555;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            color: #000;
-            text-decoration: underline;
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2.6rem;
-            }
-            body {
-                padding: 1.25rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-
-        <header>
-            <h1>whitedragon<br />one</h1>
-            <div class="sub"><span>⟡</span> Tools for the free web <span>⟡</span></div>
-        </header>
-
-        <main>
-
-            <section>
-                <h2>about</h2>
-                <p>Built for speed and privacy.</p>
-            </section>
-
-            <section>
-                <h2>what we do</h2>
-                <ul>
-                    <li>develop proxies, browsers and web services</li>
-                </ul>
-            </section>
-
-            <hr class="divider" />
-
-            <section>
-                <h2>contact</h2>
-                <p>whitedragon303@proton.me</p>
-            </section>
-
-        </main>
-
-        <footer>
-            <a href="https://github.com/whitedragon-one">github</a> &nbsp;/&nbsp; <a href="#">twitter</a> &nbsp;/&nbsp; 2026
-        </footer>
-
-    </div>
-
-</body>
-</html>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById("theme-toggle");
+  var label = document.getElementById("theme-label");
+  function isDark() { return root.getAttribute("data-theme") === "dark"; }
+  function render() {
+    var dark = isDark();
+    label.textContent = dark ? "Dark" : "Light";
+    btn.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+  }
+  btn.addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("wd303-theme", next); } catch (e) {}
+    render();
+  });
+  render();
+})();
+    </script>
