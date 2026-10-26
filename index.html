@@ -1,5 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Personal home page of WhiteDragon303, developer and founder of WhiteDragon Software.">
 <title>WhiteDragon303</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#fafbfc">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: one narrow column that reads like a repo's file listing. The headline is the bold move; everything else stays quiet. */
@@ -33,7 +39,9 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { overflow-wrap: break-word; }
+a, button { -webkit-tap-highlight-color: transparent; }
 body {
   margin: 0;
   background: var(--bg);
@@ -94,10 +102,12 @@ a.inline:hover { color: var(--accent); }
   color: var(--fg);
   background: var(--surface);
   border: 1px solid var(--line);
-  padding: 9px 12px;
+  min-height: 44px;
+  padding: 0 14px;
   cursor: pointer;
+  touch-action: manipulation;
 }
-.toggle:hover { border-color: var(--accent); }
+.toggle:active { border-color: var(--accent); }
 .toggle svg { width: 15px; height: 15px; flex: none; }
 .toggle .moon { display: none; }
 :root[data-theme="dark"] .toggle .sun { display: none; }
@@ -183,7 +193,7 @@ h2 {
   text-decoration: none;
   transition: background-color 0.15s ease;
 }
-.row:hover { background: var(--surface); }
+.row:active { background: var(--surface); }
 .name {
   display: flex;
   align-items: center;
@@ -197,8 +207,13 @@ h2 {
   color: var(--muted);
   transition: transform 0.15s ease, color 0.15s ease;
 }
-.row:hover .name { color: var(--accent); }
-.row:hover .arrow { color: var(--accent); transform: translate(2px, -2px); }
+.row:active .name { color: var(--accent); }
+@media (hover: hover) {
+  .toggle:hover { border-color: var(--accent); }
+  .row:hover { background: var(--surface); }
+  .row:hover .name { color: var(--accent); }
+  .row:hover .arrow { color: var(--accent); transform: translate(2px, -2px); }
+}
 .desc { min-width: 0; }
 .desc p { margin: 0; }
 .runs {
@@ -247,8 +262,11 @@ h2 {
   overflow-wrap: anywhere;
   text-align: right;
 }
-.links a:hover .label { color: var(--accent); }
-.links a:hover .handle { color: var(--fg); }
+.links a:active .label { color: var(--accent); }
+@media (hover: hover) {
+  .links a:hover .label { color: var(--accent); }
+  .links a:hover .handle { color: var(--fg); }
+}
 
 .foot {
   display: flex;
@@ -264,10 +282,22 @@ h2 {
 }
 
 @media (max-width: 680px) {
-  .intro { padding-block: 48px 48px; }
-  .row { grid-template-columns: minmax(0, 1fr); gap: 6px; padding-block: 18px; }
+  .intro { padding-block: 44px 44px; }
+  .lede { font-size: 1.0625rem; }
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    padding: 18px 0;
+    margin-inline: 0;
+  }
   .lang { margin-top: 4px; }
   .links { grid-template-columns: minmax(0, 1fr); }
+  .links a { min-height: 52px; align-items: center; }
+  .foot { margin-top: 48px; }
+}
+@media (max-width: 400px) {
+  h1 { font-size: 2.55rem; }
+  .toggle { padding: 0 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -283,6 +313,12 @@ h2 {
 })();
 </script>
 
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+:root[data-theme="dark"] { color-scheme: dark; }
+</style>
+</head>
+<body>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#top" aria-label="WhiteDragon303, top of page">
@@ -408,6 +444,8 @@ h2 {
   function render() {
     var dark = isDark();
     label.textContent = dark ? "Dark" : "Light";
+    var tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) tc.setAttribute("content", dark ? "#0b0e13" : "#fafbfc");
     btn.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
   }
   btn.addEventListener("click", function () {
@@ -418,4 +456,6 @@ h2 {
   });
   render();
 })();
-    </script>
+</script>
+</body>
+                                                       </html>
