@@ -377,7 +377,7 @@ h2 {
 
   <main id="top">
     <section class="intro">
-      <p class="eyebrow">Developer, founder of <a class="inline" href="https://github.com/whitedragon-software">WhiteDragon Software</a></p>
+      <p class="eyebrow">Developer, founder and maintainer of <a class="inline" href="https://github.com/whitedragon-software">WhiteDragon Software</a></p>
       <h1>Minimal software for <em>the open web.</em></h1>
       <p class="lede">
         I'm <strong><a class="inline" href="https://github.com/whitedragon303">WhiteDragon303</a></strong>, formerly WhiteDragon-one. I build compact web and desktop applications, mostly on Cloudflare Workers, and keep each project small enough to fit in a single file.
@@ -502,12 +502,25 @@ h2 {
       });
     }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
     var fold = window.innerHeight;
+    var always = document.querySelectorAll(".projects li, .links li");
+    var shown = 0;
     items.forEach(function (el) {
-      if (el.getBoundingClientRect().top > fold * 0.92) {
+      var below = el.getBoundingClientRect().top > fold * 0.92;
+      var isList = Array.prototype.indexOf.call(always, el) !== -1;
+      if (below || isList) {
+        // Project and contact rows always animate in, even when already on screen.
+        if (!below) { el.style.transitionDelay = (shown++ * 90) + "ms"; }
         el.classList.add("reveal");
         io.observe(el);
       }
     });
+    // Safety net: never leave anything hidden if the observer does not fire.
+    setTimeout(function () {
+      document.querySelectorAll(".reveal:not(.in)").forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) el.classList.add("in");
+      });
+    }, 1500);
   }
 })();
 </script>
