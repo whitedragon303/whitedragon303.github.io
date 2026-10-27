@@ -1,8 +1,12 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Personal home page of WhiteDragon303, developer and founder of WhiteDragon Software.">
 <title>WhiteDragon303</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#fafbfc">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: one narrow column that reads like a repo's file listing. The headline is the bold move; everything else stays quiet. */
 :root {
@@ -16,7 +20,7 @@
   --lang-js: #b08900;
   --lang-ts: #2f6fdb;
   --lang-html: #d2502a;
-  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Syne", "Helvetica Neue", Arial, sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
@@ -121,13 +125,12 @@ a.inline:hover { color: var(--accent); }
 }
 h1 {
   margin: 0;
-  max-width: 14ch;
+  max-width: 15ch;
   font-family: var(--font-display);
-  font-weight: 800;
-  font-stretch: 78%;
-  font-size: clamp(2.9rem, 9.4vw, 5.6rem);
-  line-height: 0.96;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  font-size: clamp(2.1rem, 7.2vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 h1 em { font-style: normal; color: var(--accent); }
@@ -278,7 +281,13 @@ h2 {
 }
 
 @media (max-width: 680px) {
-  .intro { padding-block: 44px 44px; }
+  body {
+    padding-block: 24px 64px;
+    padding-left: max(28px, env(safe-area-inset-left, 0px));
+    padding-right: max(28px, env(safe-area-inset-right, 0px));
+  }
+  .intro { padding-block: 56px 56px; }
+  .elsewhere { padding-top: 56px; }
   .lede { font-size: 1.0625rem; }
   .row {
     grid-template-columns: minmax(0, 1fr);
@@ -292,10 +301,48 @@ h2 {
   .foot { margin-top: 48px; }
 }
 @media (max-width: 400px) {
-  h1 { font-size: 2.55rem; }
+  h1 { font-size: 2rem; }
+  body {
+    padding-left: max(24px, env(safe-area-inset-left, 0px));
+    padding-right: max(24px, env(safe-area-inset-right, 0px));
+  }
   .toggle { padding: 0 12px; }
 }
+/* Scroll effects: sections rise into place and a thin bar tracks reading progress.
+   Pure CSS; browsers without scroll-driven animation show the page statically. */
+@supports (animation-timeline: view()) {
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  html::after {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--accent);
+    transform-origin: left;
+    transform: scaleX(0);
+    animation: progress linear both;
+    animation-timeline: scroll(root);
+    z-index: 20;
+  }
+}
+/* Reveal on scroll: below-the-fold items are hidden by script, then appear when reached. */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html::after { animation: none !important; }
+  html::after { display: none; }
   html { scroll-behavior: auto; }
   .row, .name .arrow { transition: none; }
 }
@@ -309,6 +356,12 @@ h2 {
 })();
 </script>
 
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+:root[data-theme="dark"] { color-scheme: dark; }
+</style>
+</head>
+<body>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#top" aria-label="WhiteDragon303, top of page">
@@ -325,7 +378,7 @@ h2 {
   <main id="top">
     <section class="intro">
       <p class="eyebrow">Developer, founder of <a class="inline" href="https://github.com/whitedragon-software">WhiteDragon Software</a></p>
-      <h1>Small tools that ship as <em>one file.</em></h1>
+      <h1>Minimal software for <em>the open web.</em></h1>
       <p class="lede">
         I'm <strong><a class="inline" href="https://github.com/whitedragon303">WhiteDragon303</a></strong>, formerly WhiteDragon-one. I build compact web and desktop applications, mostly on Cloudflare Workers, and keep each project small enough to fit in a single file.
       </p>
@@ -437,7 +490,26 @@ h2 {
     render();
   });
   render();
+
+  // Reveal on scroll. Anything already on screen stays visible; items further down
+  // start hidden and appear as they are scrolled to.
+  var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if ("IntersectionObserver" in window && !calm) {
+    var items = document.querySelectorAll(".intro > *, .section-head, .projects li, .links li, .foot");
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+    var fold = window.innerHeight;
+    items.forEach(function (el) {
+      if (el.getBoundingClientRect().top > fold * 0.92) {
+        el.classList.add("reveal");
+        io.observe(el);
+      }
+    });
+  }
 })();
 </script>
-
-</body></html>
+</body>
+  </html>
